@@ -1,0 +1,56 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+venv
+env
+
+# Environment
+.env
+.env.*
+!.env.exampel
+
+# Data
+data/raw/*
+data/processed/*
+
+# Trained models and artifacts
+models/*
+*.pkl
+*.joblib
+*.h5
+*.keras
+*.pt
+*.pth
+*.onnx
+
+# Jupyter Notebook
+.ipynb_checkpoints/
+
+# Airflow
+airflow/logs/
+airflow/airflow.db
+airflow/__pycache__/
+
+# IDE
+.vscode
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Exceptions
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
