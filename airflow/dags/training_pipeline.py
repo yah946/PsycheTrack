@@ -23,7 +23,7 @@ def training_pipeline():
     def train_models(data_path="data",with_grid_search=False):
         from src.psyche_track.pipeline import pipeline
         import pandas as pd
-        import sklearn
+        from sklearn.preprocessing import LabelEncoder
         import numpy as np
 
         def read_features(path):
@@ -35,11 +35,11 @@ def training_pipeline():
         y_train = pd.read_parquet(f"/opt/airflow/{data_path}/y_train.parquet").squeeze()
         y_test = pd.read_parquet(f"/opt/airflow/{data_path}/y_test.parquet").squeeze()
 
-        encoder = sklearn.preprocessing.LabelEncoder()
+        encoder = LabelEncoder()
         y_train = encoder.fit_transform(y_train)
         y_test = encoder.transform(y_test)
         
-        return pipeline(X_train,X_test,y_train,y_test,with_grid_search=False)
+        return pipeline(X_train,X_test,y_train,y_test,with_grid_search=with_grid_search)
     
     @task(task_id="compare_models")
     def compare_models(base_metrics,best_metrics):
@@ -54,7 +54,7 @@ def training_pipeline():
 
     data_path = load_data()
     base_metrics = train_models(data_path)
-    best_metrics = train_models(data_path)
+    best_metrics = train_models(data_path,with_grid_search=True)
     results = compare_models(base_metrics,best_metrics)
     choise_best_model(results)
 
