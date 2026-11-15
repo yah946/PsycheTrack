@@ -20,7 +20,7 @@ st.write("Enter the student's information to predict their mental health risk.")
 # -----------------------------
 @st.cache_resource
 def load_model():
-    return joblib.load("models/compare/model/classifier.joblib")
+    return joblib.load("reports/model/classifier.joblib")
 
 model = load_model()
 
