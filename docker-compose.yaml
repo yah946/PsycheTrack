@@ -18,12 +18,14 @@ x-airflow-common: &airflow-common
     AIRFLOW_ADMIN_EMAIL: ${AIRFLOW_ADMIN_EMAIL}
 
   volumes:
-  - ./dags:/opt/airflow/dags
+  - ./airflow/dags:/opt/airflow/dags
+  - ./airflow/logs:/opt/airflow/logs
+  - ./airflow/plugins:/opt/airflow/plugins
+  - ./airflow/config:/opt/airflow/config
   - ./src:/opt/airflow/src
   - ./data:/opt/airflow/data
   - ./models:/opt/airflow/models
   - ./reports:/opt/airflow/reports
-  - ./logs:/opt/airflow/logs
 
   user: "${AIRFLOW_UID:-50000}:0"
 

@@ -3,7 +3,7 @@ import pandas as pd
 import os
 from shutil import copy2
 
-COMPARAISON_PATH = Path('models/compare')
+COMPARAISON_PATH = Path('reports')
 MODELS_PATH = Path('models')
 files = {
     'K-Nearest Neighbors':'knn',
