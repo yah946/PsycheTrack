@@ -6,7 +6,10 @@ import seaborn as sns
 from sklearn.linear_model import LogisticRegression
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.svm import SVC
+from sklearn.model_selection import GridSearchCV,KFold
 from sklearn.preprocessing import label_binarize
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
@@ -17,11 +20,7 @@ from sklearn.metrics import (
     confusion_matrix,
 )
 from pathlib import Path
-from .data_loader import (
-    load_data,
-    train_test_split,
-    preprocessing
-)
+from .data_loader import preprocessing
 import joblib
 RANDON_SEED = 10
 COPARAISON_METRICS_PATH = Path('models/compare/metrics')
@@ -60,9 +59,9 @@ MODELS = {
     }
 }
 def train_model(classifier,preprocessor:ColumnTransformer,param_grid:dict,X_train:np.ndarray,y_train:np.ndarray,with_grid_search:bool=False):
-    pipeline = sklearn.pipeline.Pipeline([('preprocess',preprocessor),('classifier',classifier)])
+    pipeline = Pipeline([('preprocess',preprocessor),('classifier',classifier)])
     if with_grid_search:
-        grid_search = sklearn.model_selection.GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=sklearn.model_selection.KFold(n_splits=5, shuffle=True, random_state=10),scoring='f1_weighted',n_jobs=-1,verbose=1,error_score='raise')
+        grid_search = GridSearchCV(estimator=pipeline,param_grid=param_grid,cv=KFold(n_splits=5, shuffle=True, random_state=10),scoring='f1_weighted',n_jobs=-1,verbose=1,error_score='raise')
         grid_search.fit(X_train,y_train)
         model = grid_search.best_estimator_
     else:

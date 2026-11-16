@@ -7,11 +7,11 @@ def training_pipeline():
     sys.path.insert(0, "/opt/airflow")
     @task(task_id="load_data")
     def load_data():
-        from src.psyche_track.data_loader import load_data,train_test_split
+        from src.psyche_track.data_loader import load_data,split_data
         import pyarrow as pa
         import pyarrow.parquet as pq
         X,y = load_data()
-        X_train,X_test,y_train,y_test = train_test_split(X,y)
+        X_train,X_test,y_train,y_test = split_data(X,y)
 
         X_train.to_parquet("/opt/airflow/data/X_train.parquet")
         X_test.to_parquet("/opt/airflow/data/X_test.parquet")

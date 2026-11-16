@@ -1,0 +1,7 @@
+,name,stage,accuracy,precision,recall,f1,auc
+0,K-Nearest Neighbors,base,59.8,58.33,59.66,58.77,0.7826
+1,K-Nearest Neighbors,fine_tuning,63.61,64.22,63.56,63.83,0.8116
+2,Logistic Regression,base,77.1,76.97,77.0,76.96,0.9128
+3,Logistic Regression,fine_tuning,76.34,76.19,76.23,76.17,0.913
+4,Support Vector Classifier,base,72.52,72.18,72.39,72.27,0.8902
+5,Support Vector Classifier,fine_tuning,76.08,75.88,75.97,75.89,0.9138

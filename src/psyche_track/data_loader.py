@@ -29,13 +29,13 @@ def load_data(import_path:Path=IMPORT_DATASET_PATH,export_path:Path=EXPORT_DATAS
 
     return X,y
 
-def train_test_split(X:pd.DataFrame,y:pd.Series,train_size:float=0.8):
+def split_data(X:pd.DataFrame,y:pd.Series,train_size:float=0.8):
     X_train,X_test,y_train,y_test = train_test_split(X,y,train_size=train_size,random_state=RANDON_SEED,stratify=y)
     return X_train,X_test,y_train,y_test
 
 def preprocessing(ind_num_cols:list=independent_numerical_columns,rlt_num_cols:list=related_numerical_columns,ord_cols:list=ordinal_columns,nml_cols:list=nominal_columns)->ColumnTransformer:
 
-    independent_numerical_pipeline = Pipeline([('imputer',SimpleImputer(strategy='mean')),('scaler',sklearn.preprocessing.StandardScaler())])
+    independent_numerical_pipeline = Pipeline([('imputer',SimpleImputer(strategy='mean')),('scaler',StandardScaler())])
     related_numerical_pipeline = Pipeline([('scaler',StandardScaler()),('imputer',KNNImputer(n_neighbors=5,weights='distance')),])
     nominal_pipeline = Pipeline([('imputer',SimpleImputer(strategy='most_frequent')),('encoder',OneHotEncoder(handle_unknown='ignore'))])
     ordinal_pipeline = Pipeline([('imputer',SimpleImputer(strategy='most_frequent')),('encoder',OrdinalEncoder(categories=[ordinal_columns['Diet_Quality'],ordinal_columns['Physical_Activity']]))])
